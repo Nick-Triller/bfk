@@ -8,7 +8,7 @@ import (
 
 // Execute runs a brainfuck program.
 func Execute(input string) {
-	code := tokenize(input)
+	code := Tokenize(input)
 	pager := newPager()
 
 	// Index jmp targets
