@@ -22,3 +22,24 @@ func TestPopEmptyStackFails(t *testing.T) {
 		t.Error("Expected err was not created.")
 	}
 }
+
+func TestIsEmptyFalse(t *testing.T) {
+	stack := newStack()
+	stack.push(5)
+	if stack.isEmpty() {
+		t.Error("empty() should return false.")
+	}
+}
+
+func TestIsEmptyTrue(t *testing.T) {
+	stack := newStack()
+	test := func() {
+		if !stack.isEmpty() {
+			t.Error("empty() should return true.")
+		}
+	}
+	test()
+	stack.push(5)
+	stack.pop()
+	test()
+}

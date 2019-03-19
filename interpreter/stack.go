@@ -33,3 +33,8 @@ func (st *stack) pop() (int, error) {
 	st.slice = slice[:l-1]
 	return val, nil
 }
+
+// empty returns true if the stack doesn't contain any elements.
+func (st *stack) isEmpty() bool {
+	return len(st.slice) == 0
+}
