@@ -21,9 +21,9 @@ var runCmd = &cobra.Command{
 			return
 		}
 
-		input := string(in)
+		program := string(in)
 
-		interpreter.Execute(input, os.Stdin, os.Stdout)
+		interpreter.Execute(program, os.Stdin, os.Stdout)
 	},
 }
 
