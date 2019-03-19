@@ -8,7 +8,7 @@ import (
 )
 
 // Execute runs a brainfuck program.
-func Execute(program string, in io.Reader) error {
+func Execute(program string, in io.Reader, out io.Writer) error {
 	tokens := Tokenize(program)
 	pager := newPager()
 
@@ -43,10 +43,10 @@ func Execute(program string, in io.Reader) error {
 			mp++
 		case '.':
 			// Only ASCII is supported
-			fmt.Print(string(pager.getValue(mp)))
+			fmt.Fprint(out, string(pager.getValue(mp)))
 		case ',':
 			reader := bufio.NewReader(in)
-			fmt.Print("Enter character: ")
+			fmt.Fprint(out, "Enter character: ")
 			text, _ := reader.ReadString('\n')
 			pager.setValue(mp, text[0])
 		case '[':

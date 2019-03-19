@@ -23,7 +23,7 @@ var runCmd = &cobra.Command{
 
 		input := string(in)
 
-		interpreter.Execute(input, os.Stdin)
+		interpreter.Execute(input, os.Stdin, os.Stdout)
 	},
 }
 

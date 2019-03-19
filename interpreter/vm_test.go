@@ -2,7 +2,6 @@ package interpreter
 
 import (
 	"bytes"
-	"io"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -16,13 +15,17 @@ func TestHelloWorldProgram(t *testing.T) {
 		t.Errorf("Error reading file: %s", err)
 		return
 	}
-	input := string(in)
-	output := captureStdout(func() {
-		_ = Execute(input, os.Stdin)
-	})
+	program := string(in)
+	var b bytes.Buffer
+
+	if err := Execute(program, os.Stdin, &b); err != nil {
+		t.Errorf("Error %s", err)
+	}
+	got := b.String()
+
 	expected := "Hello World!\n"
-	if output != expected {
-		t.Errorf("Got %s, expected %s", output, expected)
+	if got != expected {
+		t.Errorf("Got %s, expected %s", got, expected)
 	}
 }
 
@@ -32,13 +35,13 @@ func TestSquaresProgram(t *testing.T) {
 		t.Errorf("Error reading file: %s", err)
 		return
 	}
-	input := string(in)
-	output := captureStdout(func() {
-		err := Execute(input, os.Stdin)
-		if err != nil {
-			t.Errorf("Error %s", err)
-		}
-	})
+	program := string(in)
+	var b bytes.Buffer
+	
+	if err := Execute(program, os.Stdin, &b); err != nil {
+		t.Errorf("Error %s", err)
+	}
+	got := b.String()
 
 	// Generate expected
 	var sb strings.Builder
@@ -52,46 +55,28 @@ func TestSquaresProgram(t *testing.T) {
 	expected := sb.String()
 
 	// Assert
-	if output != expected {
-		t.Errorf("Got %s, expected %s", output, expected)
+	if got != expected {
+		t.Errorf("Got %s, expected %s", got, expected)
 	}
 }
 
 func TestUnmatchedBracketsFail(t *testing.T) {
 	program := "[>][<]]"
-	err := Execute(program, os.Stdin)
-	if err == nil {
+	if err := Execute(program, os.Stdin, os.Stdout); err == nil {
 		t.Errorf("Expected error, got nil")
 	}
 }
 
 func TestInputInstruction(t *testing.T) {
 	program := ",."
-	output := captureStdout(func() {
-		in := strings.NewReader("g")
-		err := Execute(program, in)
-		if err != nil {
-			t.Errorf("Error %s", err)
-		}
-	})
-	expected := "Enter character: g"
-	// Assert
-	if output != expected {
-		t.Errorf("Got %s, expected %s", output, expected)
+	in := strings.NewReader("g")
+	var b bytes.Buffer
+	if err := Execute(program, in, &b); err != nil {
+		t.Errorf("Error: %s", err)
 	}
-}
-
-func captureStdout(f func()) string {
-	old := os.Stdout
-	r, w, _ := os.Pipe()
-	os.Stdout = w
-
-	f()
-
-	w.Close()
-	os.Stdout = old
-
-	var buf bytes.Buffer
-	io.Copy(&buf, r)
-	return buf.String()
+    got := b.String()
+	expected := "Enter character: g"
+	if got != expected {
+		t.Errorf("Got %s, expected %s", got, expected)
+	}
 }
