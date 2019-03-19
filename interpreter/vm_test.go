@@ -18,7 +18,7 @@ func TestHelloWorldProgram(t *testing.T) {
 	}
 	input := string(in)
 	output := captureStdout(func() {
-		Execute(input)
+		_ = Execute(input)
 	})
 	expected := "Hello World!\n"
 	if output != expected {
@@ -34,7 +34,10 @@ func TestSquaresProgram(t *testing.T) {
 	}
 	input := string(in)
 	output := captureStdout(func() {
-		Execute(input)
+		err := Execute(input)
+		if err != nil {
+			t.Errorf("Error %s", err)
+		}
 	})
 
 	// Generate expected

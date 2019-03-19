@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"bufio"
 	"os"
+	"errors"
 )
 
 // Execute runs a brainfuck program.
-func Execute(input string) {
+func Execute(input string) error {
 	code := Tokenize(input)
 	pager := newPager()
 
@@ -21,12 +22,15 @@ func Execute(input string) {
 		if ch == ']' {
 			loc, err := stack.pop()
 			if err != nil {
-				panic("Invalid program: Unmatched brackets.")
+				return errors.New("Invalid code: unmatched brackets")
 			}
 			// From opening to closing and from closing to opening
 			jmpMap[loc] = i
 			jmpMap[i] = loc
 		}
+	}
+	if !stack.isEmpty() {
+		return errors.New("Invalid code: unmatched brackets")
 	}
 
 	// Memory pointer and instruction pointer
@@ -66,4 +70,5 @@ func Execute(input string) {
 			break
 		}
 	}
+	return nil
 }
