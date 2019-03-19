@@ -3,6 +3,7 @@ package cmd
 import (
 	"bfk/interpreter"
 	"fmt"
+	"os"
 	"io/ioutil"
 
 	"github.com/spf13/cobra"
@@ -22,7 +23,7 @@ var runCmd = &cobra.Command{
 
 		input := string(in)
 
-		interpreter.Execute(input)
+		interpreter.Execute(input, os.Stdin)
 	},
 }
 

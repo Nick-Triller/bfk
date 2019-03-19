@@ -18,7 +18,7 @@ func TestHelloWorldProgram(t *testing.T) {
 	}
 	input := string(in)
 	output := captureStdout(func() {
-		_ = Execute(input)
+		_ = Execute(input, os.Stdin)
 	})
 	expected := "Hello World!\n"
 	if output != expected {
@@ -34,7 +34,7 @@ func TestSquaresProgram(t *testing.T) {
 	}
 	input := string(in)
 	output := captureStdout(func() {
-		err := Execute(input)
+		err := Execute(input, os.Stdin)
 		if err != nil {
 			t.Errorf("Error %s", err)
 		}
@@ -59,9 +59,25 @@ func TestSquaresProgram(t *testing.T) {
 
 func TestUnmatchedBracketsFail(t *testing.T) {
 	program := "[>][<]]"
-	err := Execute(program)
+	err := Execute(program, os.Stdin)
 	if err == nil {
 		t.Errorf("Expected error, got nil")
+	}
+}
+
+func TestInputInstruction(t *testing.T) {
+	program := ",."
+	output := captureStdout(func() {
+		in := strings.NewReader("g")
+		err := Execute(program, in)
+		if err != nil {
+			t.Errorf("Error %s", err)
+		}
+	})
+	expected := "Enter character: g"
+	// Assert
+	if output != expected {
+		t.Errorf("Got %s, expected %s", output, expected)
 	}
 }
 

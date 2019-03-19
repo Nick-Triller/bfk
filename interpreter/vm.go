@@ -3,19 +3,19 @@ package interpreter
 import (
 	"fmt"
 	"bufio"
-	"os"
 	"errors"
+	"io"
 )
 
 // Execute runs a brainfuck program.
-func Execute(input string) error {
-	code := Tokenize(input)
+func Execute(program string, in io.Reader) error {
+	tokens := Tokenize(program)
 	pager := newPager()
 
 	// Index jmp targets
 	stack := newStack()
 	jmpMap := make(map[int]int)
-	for i, ch := range code {
+	for i, ch := range tokens {
 		if ch == '[' {
 			stack.push(i)
 		}
@@ -36,7 +36,7 @@ func Execute(input string) error {
 	// Memory pointer and instruction pointer
 	mp, ip := 0, 0
 	for {
-		switch code[ip] {
+		switch tokens[ip] {
 		case '<':
 			mp--
 		case '>':
@@ -45,7 +45,7 @@ func Execute(input string) error {
 			// Only ASCII is supported
 			fmt.Print(string(pager.getValue(mp)))
 		case ',':
-			reader := bufio.NewReader(os.Stdin)
+			reader := bufio.NewReader(in)
 			fmt.Print("Enter character: ")
 			text, _ := reader.ReadString('\n')
 			pager.setValue(mp, text[0])
@@ -63,7 +63,7 @@ func Execute(input string) error {
 			pager.decrement(mp)
 		}
 
-		if ip < len(code)-1 {
+		if ip < len(tokens)-1 {
 			ip++
 		} else {
 			// Program finished
