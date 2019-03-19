@@ -16,6 +16,7 @@ Usage:
 
 Available Commands:
   help        Help about any command
+  minify      Minifies a program.
   run         Run a program.
 
 Flags:
