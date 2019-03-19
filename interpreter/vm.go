@@ -1,9 +1,9 @@
 package interpreter
 
 import (
-	"fmt"
 	"bufio"
 	"errors"
+	"fmt"
 	"io"
 )
 

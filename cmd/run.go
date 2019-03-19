@@ -3,8 +3,8 @@ package cmd
 import (
 	"bfk/interpreter"
 	"fmt"
-	"os"
 	"io/ioutil"
+	"os"
 
 	"github.com/spf13/cobra"
 )

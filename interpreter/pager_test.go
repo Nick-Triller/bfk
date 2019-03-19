@@ -1,8 +1,8 @@
 package interpreter
 
 import (
-	"testing"
 	"reflect"
+	"testing"
 )
 
 func TestFindPageCreatesMissingPages(t *testing.T) {

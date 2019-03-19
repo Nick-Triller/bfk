@@ -37,7 +37,7 @@ func TestSquaresProgram(t *testing.T) {
 	}
 	program := string(in)
 	var b bytes.Buffer
-	
+
 	if err := Execute(program, os.Stdin, &b); err != nil {
 		t.Errorf("Error %s", err)
 	}
@@ -74,7 +74,7 @@ func TestInputInstruction(t *testing.T) {
 	if err := Execute(program, in, &b); err != nil {
 		t.Errorf("Error: %s", err)
 	}
-    got := b.String()
+	got := b.String()
 	expected := "Enter character: g"
 	if got != expected {
 		t.Errorf("Got %s, expected %s", got, expected)
