@@ -57,6 +57,14 @@ func TestSquaresProgram(t *testing.T) {
 	}
 }
 
+func TestUnmatchedBracketsFail(t *testing.T) {
+	program := "[>][<]]"
+	err := Execute(program)
+	if err == nil {
+		t.Errorf("Expected error, got nil")
+	}
+}
+
 func captureStdout(f func()) string {
 	old := os.Stdout
 	r, w, _ := os.Pipe()
