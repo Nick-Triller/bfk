@@ -11,7 +11,7 @@ var validTokens = map[rune]bool{
 	']': true,
 }
 
-// tokenize converts a string to a rune slice containing only valid tokens.
+// Tokenize converts a string to a rune slice containing only valid tokens.
 func Tokenize(in string) []rune {
 	tokens := make([]rune, 0, len(in))
 	for _, ch := range in {
