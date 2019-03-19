@@ -66,8 +66,3 @@ go test ./...
 ## Dependencies
 
 bfk uses [cobra](https://github.com/spf13/cobra) for CLI parsing.
-
-
-## ToDo
-
-- Write tests for the input instruction.
