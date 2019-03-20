@@ -12,25 +12,9 @@ func Execute(program string, in io.Reader, out io.Writer) error {
 	tokens := Tokenize(program)
 	pager := newPager()
 
-	// Index jmp targets
-	stack := newStack()
-	jmpMap := make(map[int]int)
-	for i, ch := range tokens {
-		if ch == '[' {
-			stack.push(i)
-		}
-		if ch == ']' {
-			loc, err := stack.pop()
-			if err != nil {
-				return errors.New("Invalid code: unmatched brackets")
-			}
-			// From opening to closing and from closing to opening
-			jmpMap[loc] = i
-			jmpMap[i] = loc
-		}
-	}
-	if !stack.isEmpty() {
-		return errors.New("Invalid code: unmatched brackets")
+	jmpMap, err := indexJmpTargets(tokens)
+	if err != nil {
+		return err
 	}
 
 	// Memory pointer and instruction pointer
@@ -71,4 +55,27 @@ func Execute(program string, in io.Reader, out io.Writer) error {
 		}
 	}
 	return nil
+}
+
+func indexJmpTargets(tokens []rune) (map[int]int, error) {
+	stack := newStack()
+	jmpMap := make(map[int]int)
+	for i, ch := range tokens {
+		if ch == '[' {
+			stack.push(i)
+		}
+		if ch == ']' {
+			loc, err := stack.pop()
+			if err != nil {
+				return nil, errors.New("Invalid code: unmatched brackets")
+			}
+			// From opening to closing and from closing to opening
+			jmpMap[loc] = i
+			jmpMap[i] = loc
+		}
+	}
+	if !stack.isEmpty() {
+		return nil, errors.New("Invalid code: unmatched brackets")
+	}
+	return jmpMap, nil
 }
