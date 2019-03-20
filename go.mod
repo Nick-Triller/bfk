@@ -1,4 +1,4 @@
-module bfk
+module github.com/Nick-Triller/bfk
 
 go 1.12
 
