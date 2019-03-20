@@ -1,7 +1,7 @@
 # bfk
 
 [![Build Status](https://travis-ci.org/Nick-Triller/bfk.svg?branch=master)](https://travis-ci.org/Nick-Triller/bfk)
-[![Go Report Card](https://goreportcard.com/badge/github.com/nick-triller/bfk)](https://goreportcard.com/report/github.com/nick-triller/bfk)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Nick-Triller/bfk)](https://goreportcard.com/report/github.com/Nick-Triller/bfk)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 
 bfk is an interpreter for the esoteric programming 
