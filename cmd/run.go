@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"bfk/interpreter"
+	"github.com/Nick-Triller/bfk/interpreter"
 	"fmt"
 	"io/ioutil"
 	"os"
