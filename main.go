@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Nick-Triller/bfk/cmd"
+	"github.com/nick-triller/bfk/cmd"
 )
 
 // main runs the CLI logic.
