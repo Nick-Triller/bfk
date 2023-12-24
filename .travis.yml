@@ -1,7 +1,0 @@
-language: go
-go:
-  - master
-install:
-  - env GO111MODULE=on go build
-script:
-  - env GO111MODULE=on go test ./...
