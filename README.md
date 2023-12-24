@@ -1,6 +1,6 @@
 # bfk
 
-![Test](https://github.com/Nick-Triller/bfk/actions/workflows/WORKFLOW-FILE/badge.svg)
+![Test](https://github.com/Nick-Triller/bfk/actions/workflows/test.yaml/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Nick-Triller/bfk)](https://goreportcard.com/report/github.com/Nick-Triller/bfk)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 
